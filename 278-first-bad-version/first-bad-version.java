@@ -6,6 +6,8 @@ public class Solution extends VersionControl {
         int low = 1;
         int high =  n;
             int  ans=n;
+            // We know for sure there is at least one bad version
+// 👉 And worst case → last version (n) is the first bad version
         while (low<=high){
             int mid = low + ((high-low)/2);
             if (isBadVersion(mid)){
