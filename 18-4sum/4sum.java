@@ -1,33 +1,39 @@
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
-        List<List<Integer>> result = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
         int n = nums.length;
-        
         Arrays.sort(nums);
 
         for(int i = 0; i < n - 3; i++) {
 
-            // skip duplicate for first element
+            // Skip duplicate i
             if(i > 0 && nums[i] == nums[i - 1]) continue;
+
+            // Early pruning (important optimization)
+            if((long)nums[i] + nums[i+1] + nums[i+2] + nums[i+3] > target)
+                break;
+
+            if((long)nums[i] + nums[n-1] + nums[n-2] + nums[n-3] < target)
+                continue;
 
             for(int j = i + 1; j < n - 2; j++) {
 
-                // skip duplicate for second element
+                // Skip duplicate j
                 if(j > i + 1 && nums[j] == nums[j - 1]) continue;
 
                 int left = j + 1;
                 int right = n - 1;
 
                 while(left < right) {
-                    
-                    long sum = (long) nums[i] + nums[j] + nums[left] + nums[right];
+
+                    long sum = (long)nums[i] + nums[j] + nums[left] + nums[right];
 
                     if(sum == target) {
-                        result.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
+                        ans.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
                         left++;
                         right--;
 
-                        // skip duplicates
+                        // Skip duplicates
                         while(left < right && nums[left] == nums[left - 1]) left++;
                         while(left < right && nums[right] == nums[right + 1]) right--;
                     }
@@ -40,6 +46,6 @@ class Solution {
                 }
             }
         }
-        return result;
+        return ans;
     }
 }
