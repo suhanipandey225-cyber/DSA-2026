@@ -33,12 +33,12 @@
 
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);  // Step 1: sort the array
 
         for (int i = 0; i < nums.length - 2; i++) {
 
-           
+            // Skip duplicate fixed elements
             if (i > 0 && nums[i] == nums[i - 1]) continue;
 
             int left = i + 1;
@@ -49,7 +49,7 @@ class Solution {
                 int sum = nums[i] + nums[left] + nums[right];
 
                 if (sum == 0) {
-                    ans.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
 
                     left++;
                     right--;
@@ -62,16 +62,14 @@ class Solution {
                     while (left < right && nums[right] == nums[right + 1])
                         right--;
                 }
-
                 else if (sum < 0) {
-                    left++;   // need bigger sum
+                    left++;   // need bigger number
                 }
-
                 else {
-                    right--;  // need smaller sum
+                    right--;  // need smaller number
                 }
             }
         }
-        return ans;
+        return result;
     }
 }
