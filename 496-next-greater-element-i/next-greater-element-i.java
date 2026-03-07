@@ -3,26 +3,28 @@ import java.util.*;
 class Solution {
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
 
-        Stack<Integer> stack = new Stack<>();
+        Stack<Integer> st = new Stack<>();
         HashMap<Integer, Integer> map = new HashMap<>();
         for(int i = nums2.length - 1; i >= 0; i--) {
 
-            while(!stack.isEmpty() && stack.peek() <= nums2[i]) {
-                stack.pop();
+            int curr = nums2[i];
+
+            while(!st.isEmpty() && st.peek() <= curr){
+                st.pop();
             }
 
-            if(stack.isEmpty()) {
-                map.put(nums2[i], -1);
+            if(st.isEmpty()){
+                map.put(curr, -1);
             } else {
-                map.put(nums2[i], stack.peek());
+                map.put(curr, st.peek());
             }
 
-            stack.push(nums2[i]);
+            st.push(curr);
         }
 
         int[] ans = new int[nums1.length];
 
-        for(int i = 0; i < nums1.length; i++) {
+        for(int i = 0; i < nums1.length; i++){
             ans[i] = map.get(nums1[i]);
         }
 
