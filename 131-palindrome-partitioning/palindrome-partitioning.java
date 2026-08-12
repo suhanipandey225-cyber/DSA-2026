@@ -1,36 +1,33 @@
 class Solution {
     public List<List<String>> partition(String s) {
-        List<List<String>> ans = new ArrayList<> ();
-        List<String> temp = new ArrayList<>();
-        solve(0,s,temp,ans);
-        return ans;
-    }
-    public void solve(int index,String s,List<String> temp,List<List<String>> ans){
-        //base case
-        if(index==s.length()){
-            ans.add(new ArrayList<> (temp));
+        List<List<String>> ans = new ArrayList<>();
+        backtrack(s,0,new ArrayList<>(), ans );
+        return ans ;
+        
+    } 
+    private void backtrack(String s, int start, List<String> path , List<List<String >> ans){
+        if(start==s.length()){
+            ans.add(new ArrayList <>(path));
             return;
         }
-
-        for(int i = index; i<s.length(); i++){
-            if (isPalindrome(s,index,i)){
-                temp.add(s.substring(index,i+1));
-                solve(i+1,s,temp,ans);
-                temp.remove(temp.size()-1);
-
+        for(int end=start;end<s.length();end++){
+            if(isPalindrome(s,start,end)){
+                path.add(s.substring(start,end+1));
+                backtrack(s,end+1,path,ans);
+                path.remove(path.size()-1);
             }
         }
+
     }
-    public boolean isPalindrome(String s , int start ,int end){
-        while(start<end){
-            if(s.charAt(start)!=s.charAt(end)){
+    private boolean isPalindrome(String s,int left,int right){
+        while(left<right){
+            if (s.charAt(left)!= s.charAt(right)){
                 return false;
             }
-            start++;
-            end--;
+            left++;
+            right--;
         }
         return true;
     }
-        
-    
+
 }
